@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Connect Four</title>
+	<link href="app/css/main.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+	<div id="game">
+		<div class="container">
+			<div class="column" @click="addPieceToColumn($event, 0)">
+				<div class="cell"><div class="piece"></div></div>
+				<div class="cell"><div class="piece"></div></div>
+				<div class="cell"><div class="piece"></div></div>
+				<div class="cell"><div class="piece"></div></div>
+				<div class="cell"><div class="piece"></div></div>
+				<div class="cell"><div class="piece"></div></div>
+			</div>
+			<div class="column" @click="addPieceToColumn($event, 1)">
+				<div class="cell"><div class="piece"></div></div>
+				<div class="cell"><div class="piece"></div></div>
+				<div class="cell"><div class="piece"></div></div>
+				<div class="cell"><div class="piece"></div></div>
+				<div class="cell"><div class="piece"></div></div>
+				<div class="cell"><div class="piece"></div></div>
+			</div>
+			<div class="column" @click="addPieceToColumn($event, 2)">
+				<div class="cell"><div class="piece"></div></div>
+				<div class="cell"><div class="piece"></div></div>
+				<div class="cell"><div class="piece"></div></div>
+				<div class="cell"><div class="piece"></div></div>
+				<div class="cell"><div class="piece"></div></div>
+				<div class="cell"><div class="piece"></div></div>
+			</div>
+			<div class="column" @click="addPieceToColumn($event, 3)">
+				<div class="cell"><div class="piece"></div></div>
+				<div class="cell"><div class="piece"></div></div>
+				<div class="cell"><div class="piece"></div></div>
+				<div class="cell"><div class="piece"></div></div>
+				<div class="cell"><div class="piece"></div></div>
+				<div class="cell"><div class="piece"></div></div>
+			</div>			
+			<div class="column" @click="addPieceToColumn($event, 4)">
+				<div class="cell"><div class="piece"></div></div>
+				<div class="cell"><div class="piece"></div></div>
+				<div class="cell"><div class="piece"></div></div>
+				<div class="cell"><div class="piece"></div></div>
+				<div class="cell"><div class="piece"></div></div>
+				<div class="cell"><div class="piece"></div></div>
+			</div>
+			<div class="column" @click="addPieceToColumn($event, 5)">
+				<div class="cell"><div class="piece"></div></div>
+				<div class="cell"><div class="piece"></div></div>
+				<div class="cell"><div class="piece"></div></div>
+				<div class="cell"><div class="piece"></div></div>
+				<div class="cell"><div class="piece"></div></div>
+				<div class="cell"><div class="piece"></div></div>
+			</div>
+			<div class="column" @click="addPieceToColumn($event, 6)">
+				<div class="cell"><div class="piece"></div></div>
+				<div class="cell"><div class="piece"></div></div>
+				<div class="cell"><div class="piece"></div></div>
+				<div class="cell"><div class="piece"></div></div>
+				<div class="cell"><div class="piece"></div></div>
+				<div class="cell"><div class="piece"></div></div>
+			</div>
+		</div>
+	</div>
+    
+    <script src="app/js/main.js"></script>
+</body>
+</html>

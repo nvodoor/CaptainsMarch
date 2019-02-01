@@ -1,0 +1,22 @@
+.container {
+   display: flex;
+   margin: 0 auto 22px;
+   max-width: 700px;
+}
+
+.column {
+   background-color: #F0F0F0;
+   flex: 1 1 auto;
+   
+   &:hover {
+      background-color: #FFFFFF;
+   }
+}
+
+.cell {   
+   border: 1px solid #808080;
+   min-width: 100px;
+   min-height: 100px;
+   position: relative;
+}
+
