@@ -39,7 +39,46 @@
          
          this.playerTurn=1;
       },
+
+      addComputerPiece() {
+              let col = Math.floor(Math.random() * this.columnCount);
+
+              let column = document.getElementsByClassName('column')[col];
+
+              const spot = this.getOpenSpotInColumn(col);
+
+              if (spot === null) {
+                  // done to ensure computer tries again
+                  this.addComputerPiece();
+                  return;
+              }
+
+              this.board[spot.column][spot.row] = this.playerTurn;
+              column.children[spot.row].children[0].classList.add(this.playerTurn === 1 ? "red" : "blue");
+              
+              this.checkWinner(spot.row, spot.column)
+
+              this.playerTurn = 1;
+
+      },
+      checkWinner(row, col) {
+
+          const horizontal = this.checkHorizontal(row);
+          const vertical = this.checkVertical(col);
+          const major = this.checkMajor(row, col);
+          const minor = this.checkMinor(row, col);
+
+          if (horizontal || vertical || major || minor) {
+              this.winner = true
+              return
+          }
+      },
+
       addPieceToColumn(e, column){
+          if (this.playerTurn !== 1) {
+              return;
+          }
+        
           if (this.winner == true) {
               return;
           }
@@ -55,24 +94,12 @@
           
           this.board[spot.column][spot.row] = this.playerTurn;
           e.currentTarget.children[spot.row].children[0].classList.add(this.playerTurn===1 ? "red" : "blue");
-          
 
-          const horizontal = this.checkHorizontal(spot.row);
-          const vertical = this.checkVertical(spot.column);
-          const major = this.checkMajor(spot.row, spot.column);
-          const minor = this.checkMinor(spot.row, spot.column);
+          this.checkWinner(spot.row, spot.column);
 
-          if (horizontal || vertical || major || minor) {
-            this.winner = true
-            return
-          }
-
-  
-          if(this.playerTurn===1){
-              this.playerTurn = 2; //2nd player's turn next
-          }
-          else{
-              this.playerTurn = 1; //1st player's turn next
+          if (this.winner === false) {
+              this.playerTurn = 2;
+              setTimeout(this.addComputerPiece.bind(this), 1000);
           }
   
       },
@@ -141,6 +168,8 @@
         while (col < this.columnCount && row < this.rowCount) {
             if (board[col][row] === this.playerTurn) {
                 count++;
+            } else {
+                count = 0;
             }
             if (count === 4) {
                 return true;
@@ -155,16 +184,16 @@
     checkMinor(row, col) {
 
         const board = this.board;
-
-        while (col < this.columnCount-1 && row > 0) {
+        while (col < this.columnCount - 1 && row > 0) {
             col++;
             row--;
         }
-
         let count = 0;
-        while (col > 0 && row < this.rowCount) {
+        while (col >= 0 && row < this.rowCount) {
             if (board[col][row] === this.playerTurn) {
                 count++;
+            } else {
+                count = 0;
             }
             if (count === 4) {
                 return true;
