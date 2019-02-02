@@ -1,13 +1,14 @@
 /*!
  * Connect Four game application
  */
-new Vue({
+ new Vue({
    el: '#game',
    data: {
       board: [],
       columnCount: 7,
       rowCount: 6,
-      playerTurn: 1
+      playerTurn: 1,
+      winner: false
    },
    
    beforeMount() {
@@ -39,6 +40,9 @@ new Vue({
          this.playerTurn=1;
       },
       addPieceToColumn(e, column){
+          if (this.winner == true) {
+              return;
+          }
           var spot = this.getOpenSpotInColumn(column);
           
           if(spot===null){
@@ -51,7 +55,18 @@ new Vue({
           
           this.board[spot.column][spot.row] = this.playerTurn;
           e.currentTarget.children[spot.row].children[0].classList.add(this.playerTurn===1 ? "red" : "blue");
-  
+          
+
+          const horizontal = this.checkHorizontal(spot.row);
+          const vertical = this.checkVertical(spot.column);
+          const major = this.checkMajor(spot.row, spot.column);
+          const minor = this.checkMinor(spot.row, spot.column);
+
+          if (horizontal || vertical || major || minor) {
+            this.winner = true
+            return
+          }
+
   
           if(this.playerTurn===1){
               this.playerTurn = 2; //2nd player's turn next
@@ -74,6 +89,92 @@ new Vue({
           
           //column is full
           return null;
-      }
+      },
+      checkHorizontal(row) {
+          const board = this.board;
+          
+          let count = 0;
+
+          for (let i = 0; i < this.columnCount; i++) {
+              if (board[i][row] === this.playerTurn) {
+                  count++;
+              } else {
+                  count = 0;
+              }
+              if (count === 4) {
+                  return true;
+              }
+          }
+
+        return false;
+        
+    },
+    checkVertical(col) {
+        const board = this.board;
+
+        let count = 0;
+
+        for (let i = 0; i < this.rowCount; i++) {
+            if (board[col][i] === this.playerTurn) {
+                count++;
+            } else {
+                count = 0;
+            }
+            if (count === 4) {
+                return true;
+            }
+        }
+        return false;
+    },
+
+    checkMajor(row, col) {
+
+        const board = this.board;
+
+        while (col > 0 && row > 0) {
+            col--;
+            row--;
+        }
+
+        let count = 0;
+
+        while (col < this.columnCount && row < this.rowCount) {
+            if (board[col][row] === this.playerTurn) {
+                count++;
+            }
+            if (count === 4) {
+                return true;
+            }
+            row++;
+            col++;
+        }
+
+        return false;
+    },
+
+    checkMinor(row, col) {
+
+        const board = this.board;
+
+        while (col < this.columnCount-1 && row > 0) {
+            col++;
+            row--;
+        }
+
+        let count = 0;
+        while (col > 0 && row < this.rowCount) {
+            if (board[col][row] === this.playerTurn) {
+                count++;
+            }
+            if (count === 4) {
+                return true;
+            }
+            col--;
+            row++;
+        }
+
+        return false;
+    }
+
    }
 });
