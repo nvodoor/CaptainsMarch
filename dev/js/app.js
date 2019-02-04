@@ -19,7 +19,7 @@
    },
    
    methods: {
-      resetGame: function() {
+      resetGame() {
          // Empty board
          this.board = [];
 
@@ -90,6 +90,7 @@
           this.playerTurn = 1;
 
       },
+
       checkWinner(row, col) {
 
           const horizontal = this.checkHorizontal(row);
@@ -146,7 +147,6 @@
                   this.playerTurn = 1;
               }
           }
-
   
       },
 
