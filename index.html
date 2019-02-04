@@ -14,7 +14,14 @@
 				</div>
 			</div>
 		</div>
-		<p v-if="winner">The winner of this game is Player:{{ playerTurn }}</p>
+		<audio v-if="winner" class="hide-audio" autoplay><source src="applause.mp3" type="audio/mpeg"></audio>
+		<p v-if="winner" class="center-win">The winner of this game is Player: {{ playerTurn }}.</p>
+		<p v-if="tie" class="center-win">This game resulted in a tie.</p>
+		<div class="container button-space">
+			<button type="text" class="button-select" @click="resetGame">Reset Game</button>
+			<button type="text" class="button-select" @click="multiPlayer">Play Multiplayer</button>
+			<button type="text" class="button-select" @click="computerAi">Computer AI</button>
+		</div>
 	</div>
     
     <script src="app/js/main.js"></script>

@@ -8,7 +8,10 @@
       columnCount: 7,
       rowCount: 6,
       playerTurn: 1,
-      winner: false
+      winner: false,
+      played: 0,
+      tie: false,
+      computer: true,
    },
    
    beforeMount() {
@@ -19,6 +22,10 @@
       resetGame: function() {
          // Empty board
          this.board = [];
+
+         this.winner = false;
+         this.tie = false;
+         this.played = 0;
          
          var emptyColumn = [];
          for(var y = 0; y < this.rowCount; y++){
@@ -40,25 +47,47 @@
          this.playerTurn=1;
       },
 
+      multiPlayer() {
+          this.computer = false;
+          this.resetGame();
+      },
+
+      computerAi() {
+          this.computer = true;
+          this.resetGame();
+      },
+
       addComputerPiece() {
-              let col = Math.floor(Math.random() * this.columnCount);
 
-              let column = document.getElementsByClassName('column')[col];
+         let col = Math.floor(Math.random() * this.columnCount);
 
-              const spot = this.getOpenSpotInColumn(col);
+         let column = document.getElementsByClassName('column')[col];
 
-              if (spot === null) {
-                  // done to ensure computer tries again
-                  this.addComputerPiece();
-                  return;
-              }
+         const spot = this.getOpenSpotInColumn(col);
 
-              this.board[spot.column][spot.row] = this.playerTurn;
-              column.children[spot.row].children[0].classList.add(this.playerTurn === 1 ? "red" : "blue");
-              
-              this.checkWinner(spot.row, spot.column)
+         if (spot === null) {
+            // done to ensure computer tries again
+            this.addComputerPiece();
+            return;
+         }
 
-              this.playerTurn = 1;
+         this.board[spot.column][spot.row] = this.playerTurn;
+         column.children[spot.row].children[0].classList.add(this.playerTurn === 1 ? "red" : "blue");
+        
+         this.checkWinner(spot.row, spot.column)
+
+         this.played++;
+
+         if (this.played === 42 && this.winner !== true) {
+            this.tie = true;
+            return;
+         }
+
+         if (this.winner === true) {
+            return;
+         }
+
+          this.playerTurn = 1;
 
       },
       checkWinner(row, col) {
@@ -75,20 +104,21 @@
       },
 
       addPieceToColumn(e, column){
-          if (this.playerTurn !== 1) {
+
+          if (this.playerTurn !== 1 && this.computer === true) {
               return;
           }
         
-          if (this.winner == true) {
+          if (this.winner === true) {
               return;
           }
+
           var spot = this.getOpenSpotInColumn(column);
           
           if(spot===null){
               //unable to add piece to full column
               return;
           }
-          
           
           //TODO: see if going between board and DOM can be simplified/unified
           
@@ -97,12 +127,29 @@
 
           this.checkWinner(spot.row, spot.column);
 
-          if (this.winner === false) {
-              this.playerTurn = 2;
-              setTimeout(this.addComputerPiece.bind(this), 1000);
+          this.played++;
+
+          if (this.played === 42 && this.winner !== true) {
+              this.tie = true;
+              return;
           }
+
+          if (this.computer === true) {
+              if (this.winner === false) {
+                  this.playerTurn = 2;
+                  setTimeout(this.addComputerPiece.bind(this), 1000);
+              }
+          } else {
+              if (this.playerTurn === 1) {
+                  this.playerTurn = 2;
+              } else {
+                  this.playerTurn = 1;
+              }
+          }
+
   
       },
+
       getOpenSpotInColumn(column){
           for(var row = this.rowCount-1; row >=0; row--) {
               
@@ -117,6 +164,7 @@
           //column is full
           return null;
       },
+
       checkHorizontal(row) {
           const board = this.board;
           
@@ -136,6 +184,7 @@
         return false;
         
     },
+
     checkVertical(col) {
         const board = this.board;
 

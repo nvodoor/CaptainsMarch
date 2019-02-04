@@ -7,3 +7,11 @@ This is a game of Captain's March that I am developing using the Vue framework.
 - Step Three: Implemented logic to check to see if a row, column, or major/minor diagonal had four in a row.
 - Step Four: Created computer AI. Complete Bare Minimum Requirements. 
 - BMRs took me around 2 hours and 50 minutes. Major issues were configuring Gulp on my laptop. That did not work so I went with my PC instead.
+
+# Additional Content
+
+- Added Reset Game Content.
+- Added Tie Game Check.
+- Added Multiplayer Option.
+- Added Music after game ends.
+- Additional Options took about an hour and a half to add.

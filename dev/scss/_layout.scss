@@ -20,3 +20,28 @@
    position: relative;
 }
 
+.center-win {
+    text-align: center;
+    font-size: 2rem;
+    font-family: Verdana, Tahoma, sans-serif;
+}
+
+.button-select {
+    display: flex;
+    width: 10rem;
+    height: 4rem;
+    justify-content: center;
+    align-content: center;
+    background-color: #5864ca;
+    font-size: 1rem;
+    color: white;
+    font-family: Verdana, Tahoma, sans-serif;
+}
+
+.button-space {
+    justify-content: space-around;
+}
+
+.hide-audio {
+    display: none;
+}
